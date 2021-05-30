@@ -5,5 +5,22 @@ import 'package:flutter_slot/game.dart';
 void main() async {
   final game = MyGame();
 
-  runApp(GameWidget(game: game));
+  runApp(
+    MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Dice Slot'),
+        ),
+        body: Container(
+          color: Colors.white,
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 64),
+              child: GameWidget(game: game),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
 }
