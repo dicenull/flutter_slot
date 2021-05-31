@@ -118,12 +118,25 @@ class MyGame extends BaseGame with DoubleTapDetector, TapDetector {
   }
 
   @override
+  void render(Canvas canvas) {
+    canvas.clipRect(
+      Rect.fromCenter(
+          center: Offset(canvasSize.x / 2, canvasSize.y / 2),
+          width: 200,
+          height: 200),
+    );
+
+    super.render(canvas);
+  }
+
+  @override
   void update(double dt) {
     reelSprites.asMap().forEach((x, reel) {
       reel.forEach((symbol) {
         final leftCenterPos =
             (size.x / 2) - (reelSprites.length - 1) * .5 * symbol.size.x;
         symbol.x = leftCenterPos + x * symbol.size.x;
+
         symbol.y += 500 * dt;
 
         if (symbol.y > canvasSize.y) {
