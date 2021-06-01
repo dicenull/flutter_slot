@@ -3,77 +3,81 @@ import 'package:flame/extensions.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
+import 'package:flame/keyboard.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/src/services/raw_keyboard.dart';
 import 'package:flutter_slot/components/reel_conponent.dart';
 import 'package:flutter_slot/data/symbol.dart';
 
-class MyGame extends BaseGame with DoubleTapDetector, TapDetector {
-  static const List<Symbol> leftReel = [
-    Symbol.replay(),
-    Symbol.bell(),
-    Symbol.watermelon(),
-    Symbol.plum(),
-    Symbol.seven(),
-    Symbol.replay(),
-    Symbol.bell(),
-    Symbol.watermelon(),
-    Symbol.seven(),
-    Symbol.cherry(),
-    Symbol.replay(),
-    Symbol.bell(),
-    Symbol.watermelon(),
-    Symbol.bar(),
-    Symbol.bar(),
-    Symbol.replay(),
-    Symbol.bell(),
-    Symbol.watermelon(),
-    Symbol.cherry(),
-    Symbol.plum(),
+class MyGame extends BaseGame
+    with DoubleTapDetector, TapDetector, KeyboardEvents {
+  static const List<SlotSymbol> leftReel = [
+    SlotSymbol.replay(),
+    SlotSymbol.bell(),
+    SlotSymbol.watermelon(),
+    SlotSymbol.plum(),
+    SlotSymbol.seven(),
+    SlotSymbol.replay(),
+    SlotSymbol.bell(),
+    SlotSymbol.watermelon(),
+    SlotSymbol.seven(),
+    SlotSymbol.cherry(),
+    SlotSymbol.replay(),
+    SlotSymbol.bell(),
+    SlotSymbol.watermelon(),
+    SlotSymbol.bar(),
+    SlotSymbol.bar(),
+    SlotSymbol.replay(),
+    SlotSymbol.bell(),
+    SlotSymbol.watermelon(),
+    SlotSymbol.cherry(),
+    SlotSymbol.plum(),
   ];
 
-  static const List<Symbol> centerReel = [
-    Symbol.bell(),
-    Symbol.watermelon(),
-    Symbol.bar(),
-    Symbol.seven(),
-    Symbol.replay(),
-    Symbol.bell(),
-    Symbol.watermelon(),
-    Symbol.cherry(),
-    Symbol.seven(),
-    Symbol.replay(),
-    Symbol.bell(),
-    Symbol.watermelon(),
-    Symbol.cherry(),
-    Symbol.plum(),
-    Symbol.replay(),
-    Symbol.bell(),
-    Symbol.watermelon(),
-    Symbol.bar(),
-    Symbol.plum(),
-    Symbol.replay(),
+  static const List<SlotSymbol> centerReel = [
+    SlotSymbol.bell(),
+    SlotSymbol.watermelon(),
+    SlotSymbol.bar(),
+    SlotSymbol.seven(),
+    SlotSymbol.replay(),
+    SlotSymbol.bell(),
+    SlotSymbol.watermelon(),
+    SlotSymbol.cherry(),
+    SlotSymbol.seven(),
+    SlotSymbol.replay(),
+    SlotSymbol.bell(),
+    SlotSymbol.watermelon(),
+    SlotSymbol.cherry(),
+    SlotSymbol.plum(),
+    SlotSymbol.replay(),
+    SlotSymbol.bell(),
+    SlotSymbol.watermelon(),
+    SlotSymbol.bar(),
+    SlotSymbol.plum(),
+    SlotSymbol.replay(),
   ];
 
-  static const List<Symbol> rightReel = [
-    Symbol.bar(),
-    Symbol.bar(),
-    Symbol.replay(),
-    Symbol.bell(),
-    Symbol.watermelon(),
-    Symbol.seven(),
-    Symbol.seven(),
-    Symbol.replay(),
-    Symbol.bell(),
-    Symbol.watermelon(),
-    Symbol.plum(),
-    Symbol.plum(),
-    Symbol.replay(),
-    Symbol.bell(),
-    Symbol.watermelon(),
-    Symbol.cherry(),
-    Symbol.cherry(),
-    Symbol.replay(),
-    Symbol.bell(),
-    Symbol.watermelon(),
+  static const List<SlotSymbol> rightReel = [
+    SlotSymbol.bar(),
+    SlotSymbol.bar(),
+    SlotSymbol.replay(),
+    SlotSymbol.bell(),
+    SlotSymbol.watermelon(),
+    SlotSymbol.seven(),
+    SlotSymbol.seven(),
+    SlotSymbol.replay(),
+    SlotSymbol.bell(),
+    SlotSymbol.watermelon(),
+    SlotSymbol.plum(),
+    SlotSymbol.plum(),
+    SlotSymbol.replay(),
+    SlotSymbol.bell(),
+    SlotSymbol.watermelon(),
+    SlotSymbol.cherry(),
+    SlotSymbol.cherry(),
+    SlotSymbol.replay(),
+    SlotSymbol.bell(),
+    SlotSymbol.watermelon(),
   ];
 
   late final List<ReelComponent> reels;
@@ -115,5 +119,27 @@ class MyGame extends BaseGame with DoubleTapDetector, TapDetector {
   @override
   void update(double dt) {
     super.update(dt);
+  }
+
+  @override
+  void onKeyEvent(RawKeyEvent event) {
+    if (event is RawKeyDownEvent) {
+      if (event.logicalKey == LogicalKeyboardKey.space) {
+        reels.forEach((reel) {
+          reel.roll();
+        });
+      }
+
+      final stopKeys = [
+        LogicalKeyboardKey.keyA,
+        LogicalKeyboardKey.keyS,
+        LogicalKeyboardKey.keyD
+      ];
+      for (var i = 0; i < reels.length; i++) {
+        if (event.logicalKey == stopKeys[i]) {
+          reels[i].stopCurrent();
+        }
+      }
+    }
   }
 }

@@ -13,8 +13,8 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$SymbolTearOff {
-  const _$SymbolTearOff();
+class _$SlotSymbolTearOff {
+  const _$SlotSymbolTearOff();
 
   Bell bell() {
     return const Bell();
@@ -46,10 +46,10 @@ class _$SymbolTearOff {
 }
 
 /// @nodoc
-const $Symbol = _$SymbolTearOff();
+const $SlotSymbol = _$SlotSymbolTearOff();
 
 /// @nodoc
-mixin _$Symbol {
+mixin _$SlotSymbol {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() bell,
@@ -99,18 +99,19 @@ mixin _$Symbol {
 }
 
 /// @nodoc
-abstract class $SymbolCopyWith<$Res> {
-  factory $SymbolCopyWith(Symbol value, $Res Function(Symbol) then) =
-      _$SymbolCopyWithImpl<$Res>;
+abstract class $SlotSymbolCopyWith<$Res> {
+  factory $SlotSymbolCopyWith(
+          SlotSymbol value, $Res Function(SlotSymbol) then) =
+      _$SlotSymbolCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$SymbolCopyWithImpl<$Res> implements $SymbolCopyWith<$Res> {
-  _$SymbolCopyWithImpl(this._value, this._then);
+class _$SlotSymbolCopyWithImpl<$Res> implements $SlotSymbolCopyWith<$Res> {
+  _$SlotSymbolCopyWithImpl(this._value, this._then);
 
-  final Symbol _value;
+  final SlotSymbol _value;
   // ignore: unused_field
-  final $Res Function(Symbol) _then;
+  final $Res Function(SlotSymbol) _then;
 }
 
 /// @nodoc
@@ -120,7 +121,7 @@ abstract class $BellCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BellCopyWithImpl<$Res> extends _$SymbolCopyWithImpl<$Res>
+class _$BellCopyWithImpl<$Res> extends _$SlotSymbolCopyWithImpl<$Res>
     implements $BellCopyWith<$Res> {
   _$BellCopyWithImpl(Bell _value, $Res Function(Bell) _then)
       : super(_value, (v) => _then(v as Bell));
@@ -136,7 +137,7 @@ class _$Bell implements Bell {
 
   @override
   String toString() {
-    return 'Symbol.bell()';
+    return 'SlotSymbol.bell()';
   }
 
   @override
@@ -212,7 +213,7 @@ class _$Bell implements Bell {
   }
 }
 
-abstract class Bell implements Symbol {
+abstract class Bell implements SlotSymbol {
   const factory Bell() = _$Bell;
 }
 
@@ -223,7 +224,7 @@ abstract class $BarCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BarCopyWithImpl<$Res> extends _$SymbolCopyWithImpl<$Res>
+class _$BarCopyWithImpl<$Res> extends _$SlotSymbolCopyWithImpl<$Res>
     implements $BarCopyWith<$Res> {
   _$BarCopyWithImpl(Bar _value, $Res Function(Bar) _then)
       : super(_value, (v) => _then(v as Bar));
@@ -239,7 +240,7 @@ class _$Bar implements Bar {
 
   @override
   String toString() {
-    return 'Symbol.bar()';
+    return 'SlotSymbol.bar()';
   }
 
   @override
@@ -315,7 +316,7 @@ class _$Bar implements Bar {
   }
 }
 
-abstract class Bar implements Symbol {
+abstract class Bar implements SlotSymbol {
   const factory Bar() = _$Bar;
 }
 
@@ -326,7 +327,7 @@ abstract class $CherryCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CherryCopyWithImpl<$Res> extends _$SymbolCopyWithImpl<$Res>
+class _$CherryCopyWithImpl<$Res> extends _$SlotSymbolCopyWithImpl<$Res>
     implements $CherryCopyWith<$Res> {
   _$CherryCopyWithImpl(Cherry _value, $Res Function(Cherry) _then)
       : super(_value, (v) => _then(v as Cherry));
@@ -342,7 +343,7 @@ class _$Cherry implements Cherry {
 
   @override
   String toString() {
-    return 'Symbol.cherry()';
+    return 'SlotSymbol.cherry()';
   }
 
   @override
@@ -418,7 +419,7 @@ class _$Cherry implements Cherry {
   }
 }
 
-abstract class Cherry implements Symbol {
+abstract class Cherry implements SlotSymbol {
   const factory Cherry() = _$Cherry;
 }
 
@@ -429,7 +430,7 @@ abstract class $PlumCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PlumCopyWithImpl<$Res> extends _$SymbolCopyWithImpl<$Res>
+class _$PlumCopyWithImpl<$Res> extends _$SlotSymbolCopyWithImpl<$Res>
     implements $PlumCopyWith<$Res> {
   _$PlumCopyWithImpl(Plum _value, $Res Function(Plum) _then)
       : super(_value, (v) => _then(v as Plum));
@@ -445,7 +446,7 @@ class _$Plum implements Plum {
 
   @override
   String toString() {
-    return 'Symbol.plum()';
+    return 'SlotSymbol.plum()';
   }
 
   @override
@@ -521,7 +522,7 @@ class _$Plum implements Plum {
   }
 }
 
-abstract class Plum implements Symbol {
+abstract class Plum implements SlotSymbol {
   const factory Plum() = _$Plum;
 }
 
@@ -532,7 +533,7 @@ abstract class $ReplayCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ReplayCopyWithImpl<$Res> extends _$SymbolCopyWithImpl<$Res>
+class _$ReplayCopyWithImpl<$Res> extends _$SlotSymbolCopyWithImpl<$Res>
     implements $ReplayCopyWith<$Res> {
   _$ReplayCopyWithImpl(Replay _value, $Res Function(Replay) _then)
       : super(_value, (v) => _then(v as Replay));
@@ -548,7 +549,7 @@ class _$Replay implements Replay {
 
   @override
   String toString() {
-    return 'Symbol.replay()';
+    return 'SlotSymbol.replay()';
   }
 
   @override
@@ -624,7 +625,7 @@ class _$Replay implements Replay {
   }
 }
 
-abstract class Replay implements Symbol {
+abstract class Replay implements SlotSymbol {
   const factory Replay() = _$Replay;
 }
 
@@ -635,7 +636,7 @@ abstract class $SevenCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SevenCopyWithImpl<$Res> extends _$SymbolCopyWithImpl<$Res>
+class _$SevenCopyWithImpl<$Res> extends _$SlotSymbolCopyWithImpl<$Res>
     implements $SevenCopyWith<$Res> {
   _$SevenCopyWithImpl(Seven _value, $Res Function(Seven) _then)
       : super(_value, (v) => _then(v as Seven));
@@ -651,7 +652,7 @@ class _$Seven implements Seven {
 
   @override
   String toString() {
-    return 'Symbol.seven()';
+    return 'SlotSymbol.seven()';
   }
 
   @override
@@ -727,7 +728,7 @@ class _$Seven implements Seven {
   }
 }
 
-abstract class Seven implements Symbol {
+abstract class Seven implements SlotSymbol {
   const factory Seven() = _$Seven;
 }
 
@@ -739,7 +740,7 @@ abstract class $WatermelonCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$WatermelonCopyWithImpl<$Res> extends _$SymbolCopyWithImpl<$Res>
+class _$WatermelonCopyWithImpl<$Res> extends _$SlotSymbolCopyWithImpl<$Res>
     implements $WatermelonCopyWith<$Res> {
   _$WatermelonCopyWithImpl(Watermelon _value, $Res Function(Watermelon) _then)
       : super(_value, (v) => _then(v as Watermelon));
@@ -755,7 +756,7 @@ class _$Watermelon implements Watermelon {
 
   @override
   String toString() {
-    return 'Symbol.watermelon()';
+    return 'SlotSymbol.watermelon()';
   }
 
   @override
@@ -831,6 +832,6 @@ class _$Watermelon implements Watermelon {
   }
 }
 
-abstract class Watermelon implements Symbol {
+abstract class Watermelon implements SlotSymbol {
   const factory Watermelon() = _$Watermelon;
 }

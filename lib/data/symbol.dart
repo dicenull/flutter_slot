@@ -2,12 +2,12 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'symbol.freezed.dart';
 
 @freezed
-class Symbol with _$Symbol {
-  const factory Symbol.bell() = Bell;
-  const factory Symbol.bar() = Bar;
-  const factory Symbol.cherry() = Cherry;
-  const factory Symbol.plum() = Plum;
-  const factory Symbol.replay() = Replay;
-  const factory Symbol.seven() = Seven;
-  const factory Symbol.watermelon() = Watermelon;
+class SlotSymbol with _$SlotSymbol {
+  const factory SlotSymbol.bell() = Bell;
+  const factory SlotSymbol.bar() = Bar;
+  const factory SlotSymbol.cherry() = Cherry;
+  const factory SlotSymbol.plum() = Plum;
+  const factory SlotSymbol.replay() = Replay;
+  const factory SlotSymbol.seven() = Seven;
+  const factory SlotSymbol.watermelon() = Watermelon;
 }
