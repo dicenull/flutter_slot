@@ -1,7 +1,9 @@
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
+import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
+import 'package:flutter_slot/components/reel_conponent.dart';
 import 'package:flutter_slot/data/symbol.dart';
 
 class MyGame extends BaseGame with DoubleTapDetector, TapDetector {
@@ -74,12 +76,12 @@ class MyGame extends BaseGame with DoubleTapDetector, TapDetector {
     Symbol.watermelon(),
   ];
 
-  static List<List<Symbol>> get reels => [leftReel, centerReel, rightReel];
-  List<List<SpriteComponent>> reelSprites = <List<SpriteComponent>>[];
+  late final List<ReelComponent> reels;
+  final symbolSize = 64.0;
 
   @override
   Future<void> onLoad() async {
-    await images.loadAll([
+    await Flame.images.loadAll([
       'bell.png',
       'bar.png',
       'cherry.png',
@@ -89,62 +91,29 @@ class MyGame extends BaseGame with DoubleTapDetector, TapDetector {
       'watermelon.png',
     ]);
 
-    final size = Vector2(64, 64);
+    reels = [
+      ReelComponent(leftReel, symbolSize),
+      ReelComponent(centerReel, symbolSize),
+      ReelComponent(rightReel, symbolSize),
+    ];
+
     reels.asMap().forEach((x, reel) {
-      final symbols = <SpriteComponent>[];
-      reel.asMap().forEach((y, symbol) {
-        final image = symbol.when(
-          bell: () => images.fromCache('bell.png'),
-          bar: () => images.fromCache('bar.png'),
-          cherry: () => images.fromCache('cherry.png'),
-          plum: () => images.fromCache('plum.png'),
-          replay: () => images.fromCache('replay.png'),
-          seven: () => images.fromCache('seven.png'),
-          watermelon: () => images.fromCache('watermelon.png'),
-        );
+      final leftCenterPos = (size.x / 2) - (reels.length - 1) * .5 * symbolSize;
+      final padding = (x - 1) * symbolSize;
 
-        final sprite = SpriteComponent(
-          sprite: Sprite(image),
-          size: size,
-          position: Vector2(x * size.x, y * size.y),
-        );
-        sprite.anchor = Anchor.center;
-        symbols.add(sprite);
-        add(sprite);
-      });
-
-      reelSprites.add(symbols.toList());
+      reel.position = Vector2(leftCenterPos + padding, 0);
     });
+
+    addAll(reels);
   }
 
   @override
   void render(Canvas canvas) {
-    canvas.clipRect(
-      Rect.fromCenter(
-          center: Offset(canvasSize.x / 2, canvasSize.y / 2),
-          width: 200,
-          height: 200),
-    );
-
     super.render(canvas);
   }
 
   @override
   void update(double dt) {
-    reelSprites.asMap().forEach((x, reel) {
-      reel.forEach((symbol) {
-        final leftCenterPos =
-            (size.x / 2) - (reelSprites.length - 1) * .5 * symbol.size.x;
-        symbol.x = leftCenterPos + x * symbol.size.x;
-
-        symbol.y += 500 * dt;
-
-        if (symbol.y > canvasSize.y) {
-          symbol.y -= reel.length * symbol.size.y;
-        }
-      });
-    });
-
     super.update(dt);
   }
 }
