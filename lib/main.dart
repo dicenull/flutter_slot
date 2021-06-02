@@ -13,11 +13,16 @@ void main() async {
         ),
         body: Container(
           color: Colors.white,
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 64),
-              child: GameWidget(game: game),
-            ),
+          child: Column(
+            children: [
+              Text('roll: [Space] stop: [A, S, D]'),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 64),
+                  child: GameWidget(game: game),
+                ),
+              ),
+            ],
           ),
         ),
       ),
