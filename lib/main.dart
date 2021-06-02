@@ -9,20 +9,13 @@ void main() async {
     MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Dice Slot'),
+          title: Text('roll: [Space] stop: [A, S, D]'),
         ),
         body: Container(
           color: Colors.white,
-          child: Column(
-            children: [
-              Text('roll: [Space] stop: [A, S, D]'),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 64),
-                  child: GameWidget(game: game),
-                ),
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 64),
+            child: GameWidget(game: game),
           ),
         ),
       ),
