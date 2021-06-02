@@ -10,7 +10,7 @@ import 'package:flutter_slot/components/reel_conponent.dart';
 import 'package:flutter_slot/data/symbol.dart';
 
 class MyGame extends BaseGame
-    with DoubleTapDetector, TapDetector, KeyboardEvents {
+    with VerticalDragDetector, TapDetector, KeyboardEvents {
   static const List<SlotSymbol> leftReel = [
     SlotSymbol.replay(),
     SlotSymbol.bell(),
@@ -105,7 +105,7 @@ class MyGame extends BaseGame
       final leftCenterPos = (size.x / 2) - (reels.length - 1) * .5 * symbolSize;
       final padding = (x - 1) * symbolSize;
 
-      reel.position = Vector2(leftCenterPos + padding, 0);
+      reel.position = Vector2(leftCenterPos + padding, 15);
     });
 
     addAll(reels);
@@ -119,6 +119,20 @@ class MyGame extends BaseGame
   @override
   void update(double dt) {
     super.update(dt);
+  }
+
+  int _index = 0;
+  @override
+  void onTapDown(TapDownInfo info) {
+    reels[_index].stopCurrent();
+    _index = (_index + 1) % reels.length;
+  }
+
+  @override
+  void onVerticalDragEnd(DragEndInfo info) {
+    reels.forEach((reel) {
+      reel.roll();
+    });
   }
 
   @override

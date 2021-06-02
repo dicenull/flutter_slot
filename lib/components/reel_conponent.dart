@@ -8,21 +8,24 @@ import 'package:flutter_slot/data/symbol.dart';
 import 'package:flutter_slot/data/symbol_state.dart';
 import 'package:flutter_slot/game.dart';
 
-// TODO: 回すたびに絵柄がずれていくので修正する
-
 class ReelComponent extends PositionComponent with HasGameRef<MyGame> {
   final List<SlotSymbol> symbols;
+  final double reelLength;
   final double symbolSize;
   final List<SymbolState> reel;
 
-  Vector2 get slotCenter => gameRef.canvasSize / 2 - Vector2(0, 2 * symbolSize);
+  Vector2 get slotCenter => Vector2(0, gameRef.canvasSize.y / 2 - symbolSize);
 
   // state
   bool isRoll = false;
   SuberiState? suberiState;
+  double reelPosition = 0;
+
+  double calcHeight(int y) => (y * symbolSize + reelPosition) % reelLength;
 
   void roll() {
     isRoll = true;
+    print(calcHeight(0));
   }
 
   void stop(SuberiState state) {
@@ -33,18 +36,18 @@ class ReelComponent extends PositionComponent with HasGameRef<MyGame> {
   void stopCurrent() {
     if (!isRoll) return;
 
-    final index = _nearestIndex(slotCenter.y);
+    final index = _calcCenterIndex();
     var symbol = reel[index].symbol;
     print('current: $symbol');
     suberiState = SuberiState(symbol, 1);
   }
 
-  int _nearestIndex(double targetHeight) {
+  int _calcCenterIndex() {
     int index = 0;
     var minDiff = gameRef.canvasSize.y;
 
     reel.asMap().forEach((i, state) {
-      final diff = targetHeight - state.pos.y;
+      final diff = slotCenter.y - calcHeight(i);
       if (diff > 0 && minDiff > diff) {
         minDiff = diff;
         index = i;
@@ -54,39 +57,9 @@ class ReelComponent extends PositionComponent with HasGameRef<MyGame> {
     return index;
   }
 
-  void _align() {
-    final nearestIndex = _nearestIndex(0);
-
-    for (var i = 0; i < reel.length; i++) {
-      final index = (nearestIndex + i) % reel.length;
-
-      reel[index].copyWith(pos: Vector2(0, index * symbolSize));
-    }
-  }
-
-  void _checkSuberiStop(SymbolState symbolState) {
-    if (!isRoll) {
-      return;
-    }
-
-    final state = suberiState;
-    if (state == null) {
-      return;
-    }
-
-    final pos = slotCenter.y - (height - 1) * symbolSize;
-    if (state.symbol == symbolState.symbol) {
-      final diff = pos - symbolState.pos.y;
-      if (diff > 0 && diff < 10) {
-        print('stop: ${state.symbol} $diff');
-        isRoll = false;
-        suberiState = null;
-        _align();
-      }
-    }
-  }
-
-  ReelComponent(this.symbols, this.symbolSize) : reel = <SymbolState>[] {
+  ReelComponent(this.symbols, this.symbolSize)
+      : reel = <SymbolState>[],
+        reelLength = symbolSize * symbols.length {
     symbols.asMap().forEach((y, symbol) {
       final image = symbol.when(
         bell: () => Flame.images.fromCache('bell.png'),
@@ -100,7 +73,6 @@ class ReelComponent extends PositionComponent with HasGameRef<MyGame> {
 
       reel.add(SymbolState(
         sprite: Sprite(image),
-        pos: Vector2(0, y * symbolSize),
         symbol: symbol,
       ));
     });
@@ -112,7 +84,8 @@ class ReelComponent extends PositionComponent with HasGameRef<MyGame> {
 
     canvas.clipRect(
       Rect.fromCenter(
-        center: Offset(this.position.x + symbolSize, gameRef.canvasSize.y / 2),
+        center:
+            Offset(symbolSize, gameRef.canvasSize.y / 2) + position.toOffset(),
         width: symbolSize,
         height: symbolSize * 3.5,
       ),
@@ -128,10 +101,12 @@ class ReelComponent extends PositionComponent with HasGameRef<MyGame> {
     );
 
     reel.asMap().forEach((y, state) {
+      final p = Vector2(0, calcHeight(y));
+
       state.sprite.render(
         canvas,
         size: Vector2(symbolSize, symbolSize),
-        position: state.pos + this.position,
+        position: p + this.position,
         anchor: Anchor.center,
       );
     });
@@ -141,18 +116,22 @@ class ReelComponent extends PositionComponent with HasGameRef<MyGame> {
 
   @override
   void update(double dt) {
-    reel.forEach((state) {
-      _checkSuberiStop(state);
+    final amount = 1200 * dt;
 
-      if (isRoll) {
-        state.pos.y += 800 * dt;
+    if (isRoll) {
+      reelPosition += amount;
+      reelPosition %= reelLength;
 
-        final diff = state.pos.y - gameRef.canvasSize.y;
-        if (diff > 0) {
-          state.pos.y -= reel.length * symbolSize;
+      final index = _calcCenterIndex();
+      final diff = slotCenter.y - calcHeight(index);
+      if (diff.abs() < amount) {
+        if (suberiState?.symbol == reel[index].symbol) {
+          isRoll = false;
+          suberiState = null;
+          print('stop: ${reel[index].symbol}');
         }
       }
-    });
+    }
 
     super.update(dt);
   }

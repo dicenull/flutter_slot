@@ -16,13 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$SymbolStateTearOff {
   const _$SymbolStateTearOff();
 
-  _SymbolState call(
-      {required Sprite sprite,
-      required Vector2 pos,
-      required SlotSymbol symbol}) {
+  _SymbolState call({required Sprite sprite, required SlotSymbol symbol}) {
     return _SymbolState(
       sprite: sprite,
-      pos: pos,
       symbol: symbol,
     );
   }
@@ -34,7 +30,6 @@ const $SymbolState = _$SymbolStateTearOff();
 /// @nodoc
 mixin _$SymbolState {
   Sprite get sprite => throw _privateConstructorUsedError;
-  Vector2 get pos => throw _privateConstructorUsedError;
   SlotSymbol get symbol => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -47,7 +42,7 @@ abstract class $SymbolStateCopyWith<$Res> {
   factory $SymbolStateCopyWith(
           SymbolState value, $Res Function(SymbolState) then) =
       _$SymbolStateCopyWithImpl<$Res>;
-  $Res call({Sprite sprite, Vector2 pos, SlotSymbol symbol});
+  $Res call({Sprite sprite, SlotSymbol symbol});
 
   $SlotSymbolCopyWith<$Res> get symbol;
 }
@@ -63,7 +58,6 @@ class _$SymbolStateCopyWithImpl<$Res> implements $SymbolStateCopyWith<$Res> {
   @override
   $Res call({
     Object? sprite = freezed,
-    Object? pos = freezed,
     Object? symbol = freezed,
   }) {
     return _then(_value.copyWith(
@@ -71,10 +65,6 @@ class _$SymbolStateCopyWithImpl<$Res> implements $SymbolStateCopyWith<$Res> {
           ? _value.sprite
           : sprite // ignore: cast_nullable_to_non_nullable
               as Sprite,
-      pos: pos == freezed
-          ? _value.pos
-          : pos // ignore: cast_nullable_to_non_nullable
-              as Vector2,
       symbol: symbol == freezed
           ? _value.symbol
           : symbol // ignore: cast_nullable_to_non_nullable
@@ -97,7 +87,7 @@ abstract class _$SymbolStateCopyWith<$Res>
           _SymbolState value, $Res Function(_SymbolState) then) =
       __$SymbolStateCopyWithImpl<$Res>;
   @override
-  $Res call({Sprite sprite, Vector2 pos, SlotSymbol symbol});
+  $Res call({Sprite sprite, SlotSymbol symbol});
 
   @override
   $SlotSymbolCopyWith<$Res> get symbol;
@@ -116,7 +106,6 @@ class __$SymbolStateCopyWithImpl<$Res> extends _$SymbolStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? sprite = freezed,
-    Object? pos = freezed,
     Object? symbol = freezed,
   }) {
     return _then(_SymbolState(
@@ -124,10 +113,6 @@ class __$SymbolStateCopyWithImpl<$Res> extends _$SymbolStateCopyWithImpl<$Res>
           ? _value.sprite
           : sprite // ignore: cast_nullable_to_non_nullable
               as Sprite,
-      pos: pos == freezed
-          ? _value.pos
-          : pos // ignore: cast_nullable_to_non_nullable
-              as Vector2,
       symbol: symbol == freezed
           ? _value.symbol
           : symbol // ignore: cast_nullable_to_non_nullable
@@ -139,19 +124,16 @@ class __$SymbolStateCopyWithImpl<$Res> extends _$SymbolStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_SymbolState implements _SymbolState {
-  _$_SymbolState(
-      {required this.sprite, required this.pos, required this.symbol});
+  _$_SymbolState({required this.sprite, required this.symbol});
 
   @override
   final Sprite sprite;
-  @override
-  final Vector2 pos;
   @override
   final SlotSymbol symbol;
 
   @override
   String toString() {
-    return 'SymbolState(sprite: $sprite, pos: $pos, symbol: $symbol)';
+    return 'SymbolState(sprite: $sprite, symbol: $symbol)';
   }
 
   @override
@@ -160,8 +142,6 @@ class _$_SymbolState implements _SymbolState {
         (other is _SymbolState &&
             (identical(other.sprite, sprite) ||
                 const DeepCollectionEquality().equals(other.sprite, sprite)) &&
-            (identical(other.pos, pos) ||
-                const DeepCollectionEquality().equals(other.pos, pos)) &&
             (identical(other.symbol, symbol) ||
                 const DeepCollectionEquality().equals(other.symbol, symbol)));
   }
@@ -170,7 +150,6 @@ class _$_SymbolState implements _SymbolState {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(sprite) ^
-      const DeepCollectionEquality().hash(pos) ^
       const DeepCollectionEquality().hash(symbol);
 
   @JsonKey(ignore: true)
@@ -180,15 +159,11 @@ class _$_SymbolState implements _SymbolState {
 }
 
 abstract class _SymbolState implements SymbolState {
-  factory _SymbolState(
-      {required Sprite sprite,
-      required Vector2 pos,
-      required SlotSymbol symbol}) = _$_SymbolState;
+  factory _SymbolState({required Sprite sprite, required SlotSymbol symbol}) =
+      _$_SymbolState;
 
   @override
   Sprite get sprite => throw _privateConstructorUsedError;
-  @override
-  Vector2 get pos => throw _privateConstructorUsedError;
   @override
   SlotSymbol get symbol => throw _privateConstructorUsedError;
   @override

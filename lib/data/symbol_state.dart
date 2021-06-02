@@ -7,7 +7,6 @@ part 'symbol_state.freezed.dart';
 class SymbolState with _$SymbolState {
   factory SymbolState({
     required Sprite sprite,
-    required Vector2 pos,
     required SlotSymbol symbol,
   }) = _SymbolState;
 }
