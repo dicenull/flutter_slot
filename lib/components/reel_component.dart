@@ -18,6 +18,7 @@ class ReelComponent extends PositionComponent with HasGameRef<MyGame> {
 
   // state
   bool isRoll = false;
+  bool onCheckStopCurrent = false;
   SuberiState? suberiState;
   double reelPosition = 0;
 
@@ -34,6 +35,10 @@ class ReelComponent extends PositionComponent with HasGameRef<MyGame> {
   }
 
   void stopCurrent() {
+    onCheckStopCurrent = true;
+  }
+
+  void _stopCurrent() {
     if (!isRoll) return;
 
     final index = _calcCenterIndex();
@@ -121,6 +126,11 @@ class ReelComponent extends PositionComponent with HasGameRef<MyGame> {
     if (isRoll) {
       reelPosition += amount;
       reelPosition %= reelLength;
+
+      if (onCheckStopCurrent) {
+        _stopCurrent();
+        onCheckStopCurrent = false;
+      }
 
       final index = _calcCenterIndex();
       final diff = slotCenter.y - calcHeight(index);
