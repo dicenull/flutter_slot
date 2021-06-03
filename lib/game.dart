@@ -7,6 +7,7 @@ import 'package:flame/keyboard.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/services/raw_keyboard.dart';
 import 'package:flutter_slot/components/reel_component.dart';
+import 'package:flutter_slot/components/slot_component.dart';
 import 'package:flutter_slot/data/symbol.dart';
 
 class MyGame extends BaseGame
@@ -80,7 +81,7 @@ class MyGame extends BaseGame
     SlotSymbol.watermelon(),
   ];
 
-  late final List<ReelComponent> reels;
+  late final SlotComponent slot;
   final symbolSize = 64.0;
 
   @override
@@ -95,20 +96,14 @@ class MyGame extends BaseGame
       'watermelon.png',
     ]);
 
-    reels = [
+    slot = SlotComponent([
       ReelComponent(leftReel, symbolSize),
       ReelComponent(centerReel, symbolSize),
       ReelComponent(rightReel, symbolSize),
-    ];
+    ]);
 
-    reels.asMap().forEach((x, reel) {
-      final leftCenterPos = (size.x / 2) - (reels.length - 1) * .5 * symbolSize;
-      final padding = (x - 1) * symbolSize;
-
-      reel.position = Vector2(leftCenterPos + padding, 15);
-    });
-
-    addAll(reels);
+    addAll(slot.reels);
+    await add(slot);
   }
 
   @override
@@ -124,24 +119,20 @@ class MyGame extends BaseGame
   int _index = 0;
   @override
   void onTapDown(TapDownInfo info) {
-    reels[_index].stopCurrent();
-    _index = (_index + 1) % reels.length;
+    slot.stop(_index);
+    _index = (_index + 1) % slot.reels.length;
   }
 
   @override
   void onVerticalDragEnd(DragEndInfo info) {
-    reels.forEach((reel) {
-      reel.roll();
-    });
+    slot.roll();
   }
 
   @override
   void onKeyEvent(RawKeyEvent event) {
     if (event is RawKeyDownEvent) {
       if (event.logicalKey == LogicalKeyboardKey.space) {
-        reels.forEach((reel) {
-          reel.roll();
-        });
+        slot.roll();
       }
 
       final stopKeys = [
@@ -149,9 +140,9 @@ class MyGame extends BaseGame
         LogicalKeyboardKey.keyS,
         LogicalKeyboardKey.keyD
       ];
-      for (var i = 0; i < reels.length; i++) {
+      for (var i = 0; i < slot.reels.length; i++) {
         if (event.logicalKey == stopKeys[i]) {
-          reels[i].stopCurrent();
+          slot.stop(i);
         }
       }
     }
