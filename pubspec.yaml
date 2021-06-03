@@ -53,8 +53,5 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/crate.png
-    - assets/images/explosion.png
-    - assets/audio/explosion.mp3
-    - assets/audio/miss.mp3
-    - assets/audio/music.ogg
+    - assets/aseprites/
+    - assets/images/
