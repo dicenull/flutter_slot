@@ -4,6 +4,7 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame/keyboard.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/services/raw_keyboard.dart';
 import 'package:flutter_slot/components/reel_component.dart';
@@ -12,6 +13,13 @@ import 'package:flutter_slot/data/symbol.dart';
 
 class MyGame extends BaseGame
     with VerticalDragDetector, TapDetector, KeyboardEvents {
+  TextPaint textPaint = TextPaint(
+    config: TextPaintConfig(
+      fontSize: 100.0,
+      color: Colors.white,
+    ),
+  );
+
   static const List<SlotSymbol> leftReel = [
     SlotSymbol.replay(),
     SlotSymbol.bell(),
@@ -83,6 +91,31 @@ class MyGame extends BaseGame
 
   late final SlotComponent slot;
   final symbolSize = 64.0;
+  int _point = 100;
+
+  void addPoint(SlotSymbol symbol) {
+    final winPoint = symbol.when(
+      bell: () => 30,
+      bar: () => 50,
+      cherry: () => 3,
+      plum: () => 0,
+      replay: () => 3,
+      seven: () => 100,
+      watermelon: () => 15,
+    );
+
+    _point += winPoint;
+  }
+
+  bool playSlot() {
+    _point -= 3;
+    if (_point < 0) {
+      _point = 0;
+      return false;
+    }
+
+    return true;
+  }
 
   @override
   Future<void> onLoad() async {
@@ -108,6 +141,8 @@ class MyGame extends BaseGame
 
   @override
   void render(Canvas canvas) {
+    textPaint.render(canvas, _point.toString(), Vector2(0, 0));
+
     super.render(canvas);
   }
 

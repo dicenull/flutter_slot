@@ -21,8 +21,23 @@ class ReelComponent extends PositionComponent with HasGameRef<MyGame> {
   bool onCheckStopCurrent = false;
   SuberiState? suberiState;
   double reelPosition = 0;
+  int stopIndex = -1;
 
   double calcHeight(int y) => (y * symbolSize + reelPosition) % reelLength;
+
+  List<SlotSymbol> visibleSymbols() {
+    if (stopIndex == -1) return [];
+
+    final top = (reel.length + stopIndex - 1) % reel.length;
+    final center = stopIndex;
+    final bottom = (stopIndex + 1) % reel.length;
+
+    return [
+      reel[top].symbol,
+      reel[center].symbol,
+      reel[bottom].symbol,
+    ];
+  }
 
   void roll() {
     isRoll = true;
@@ -138,6 +153,7 @@ class ReelComponent extends PositionComponent with HasGameRef<MyGame> {
         if (suberiState?.symbol == reel[index].symbol) {
           isRoll = false;
           suberiState = null;
+          stopIndex = index;
           print('stop: ${reel[index].symbol}');
         }
       }
