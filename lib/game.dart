@@ -6,7 +6,7 @@ import 'package:flame/gestures.dart';
 import 'package:flame/keyboard.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/services/raw_keyboard.dart';
-import 'package:flutter_slot/components/reel_conponent.dart';
+import 'package:flutter_slot/components/reel_component.dart';
 import 'package:flutter_slot/data/symbol.dart';
 
 class MyGame extends BaseGame
