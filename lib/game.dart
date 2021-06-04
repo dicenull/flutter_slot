@@ -161,6 +161,7 @@ class MyGame extends BaseGame
   @override
   void onVerticalDragEnd(DragEndInfo info) {
     slot.roll();
+    _index = 0;
   }
 
   @override
