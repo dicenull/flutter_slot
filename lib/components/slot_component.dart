@@ -14,11 +14,12 @@ class SlotComponent extends PositionComponent with HasGameRef<MyGame> {
   bool inBet = false;
 
   void roll() {
+    if (inBet) return;
+
     final canPlay = gameRef.playSlot();
     if (!canPlay) {
       return;
     }
-    if (inBet) return;
 
     reels.forEach((reel) {
       reel.roll();
@@ -27,6 +28,8 @@ class SlotComponent extends PositionComponent with HasGameRef<MyGame> {
   }
 
   void stop(int index) {
+    if (!reels[index].isRoll) return;
+
     reels[index].stopCurrent();
   }
 
